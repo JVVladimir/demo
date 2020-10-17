@@ -28,7 +28,6 @@ dependencies {
     implementation("io.micrometer:micrometer-registry-prometheus:1.5.5")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("com.jvvladimir:spring.starter.retry:0.0.1-20200914.155542-1")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
