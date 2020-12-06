@@ -8,9 +8,33 @@ services:
     volumes:
       - "C:/Users/Vladimir/IdeaProjects/demo/src/main/resources/prometheus.yml:/etc/prometheus/prometheus.yml"
       - "C:/Users/Vladimir/IdeaProjects/demo/src/main/resources/down_rule.yml:/etc/prometheus/down_rule.yml"
+      - "C:/Users/Vladimir/IdeaProjects/demo/src/main/resources/targets-mysql-exporter.yml:/etc/prometheus/sd/targets-mysql-exporter.yml"
   alert-manager:
     image: prom/alertmanager:latest
     ports:
       - 9093:9093
     volumes:
       - "C:/Users/Vladimir/IdeaProjects/demo/src/main/resources/alertmanager.yml:/etc/alertmanager/alertmanager.yml"
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+  mysql-exporter:
+    image: prom/mysqld-exporter
+    restart: unless-stopped
+    environment:
+      - DATA_SOURCE_NAME=root:password@(db:3306)/
+    ports:
+      - '9104:9104'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"

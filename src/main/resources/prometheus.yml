@@ -9,6 +9,10 @@ scrape_configs:
     static_configs:
       - targets: ["host.docker.internal:8080"]
       - targets: ["host.docker.internal:8081"]
+  - job_name: 'mysql-exporter'
+    file_sd_configs:
+      - files:
+        - "sd/targets-mysql-exporter.yml"
 
 rule_files:
   - "down_rule.yml"

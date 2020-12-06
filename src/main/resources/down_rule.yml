@@ -9,3 +9,27 @@ groups:
         annotations:
           summary: "Instance down"
           description: "Instance has been down for more than 1 minute."
+      - alert: MysqlDown
+        expr: mysql_up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: MySQL down (instance {{ $labels.instance }})
+          description: MySQL instance is down on
+      - alert: MySQLTooManyConnections
+        expr: avg by (instance) (max_over_time(mysql_global_status_threads_connected[5m])) / avg by (instance) (mysql_global_variables_max_connections) * 100 > 80
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: MySQL too many connections (instance {{ $labels.instance }})
+          description: More than 80% of MySQL connections are in use
+      - alert: MysqlRestarted
+        expr: mysql_global_status_uptime < 60
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: MySQL restarted (instance {{ $labels.instance }})
+          description: MySQL has just been restarted, less than one minute ago

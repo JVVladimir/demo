@@ -1,0 +1,4 @@
+- targets:
+    - host.docker.internal:9104
+  labels:
+    job: mysql-exporter
