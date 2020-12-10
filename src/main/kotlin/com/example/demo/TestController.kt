@@ -23,7 +23,7 @@ class TestController {
     @GetMapping("/download")
     fun download(): ResponseEntity<Resource> {
         val fs = FileSystemResource("C:\\Users\\Vladimir\\IdeaProjects\\demo\\src\\main\\resources\\ironman.mkv")
-       // val fs = FileInputStream("C:\\Users\\Vladimir\\IdeaProjects\\demo\\src\\main\\resources\\ironman.mkv")
+        // val fs = FileInputStream("C:\\Users\\Vladimir\\IdeaProjects\\demo\\src\\main\\resources\\ironman.mkv")
         // val bytes = Files.readAllBytes(Path.of("C:\\Users\\Vladimir\\IdeaProjects\\demo\\src\\main\\resources\\ironman.mkv"))
         println("Started")
         return ResponseEntity.ok()
@@ -34,6 +34,9 @@ class TestController {
     }
 
     @GetMapping("/hello")
-    fun test() = "Hello!"
+    fun test(): String {
+        println("Hello from container!")
+        return "Hello, Vladimir!"
+    }
 
 }
